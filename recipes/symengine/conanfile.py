@@ -21,6 +21,7 @@ required_conan_version = ">=2.1"
 
 class SymengineConan(ConanFile):
     name = "symengine"
+    version = "0.14.0"
     description = "A fast symbolic manipulation library, written in C++"
     license = "MIT"
     topics = ("symbolic", "algebra")
@@ -77,9 +78,9 @@ class SymengineConan(ConanFile):
     def source(self):
         get(
             self,
-            **self.conan_data["sources"][self.version],
-            strip_root=True,
+            f"https://github.com/symengine/symengine/archive/refs/tags/v{self.version}.tar.gz",
             destination=self.source_folder,
+            strip_root=True,
         )
 
     def generate(self):

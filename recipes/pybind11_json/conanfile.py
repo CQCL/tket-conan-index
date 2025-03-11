@@ -6,6 +6,7 @@ import os
 
 class Pybind11JsonConan(ConanFile):
     name = "pybind11_json"
+    version = "0.2.15"
     homepage = "https://github.com/pybind/pybind11_json"
     description = "An nlohmann_json to pybind11 bridge"
     topics = (
@@ -34,9 +35,9 @@ class Pybind11JsonConan(ConanFile):
     def source(self):
         get(
             self,
-            **self.conan_data["sources"][self.version],
+            f"https://github.com/pybind/pybind11_json/archive/{self.version}.tar.gz",
             destination=self.source_folder,
-            strip_root=True
+            strip_root=True,
         )
 
     def package(self):
