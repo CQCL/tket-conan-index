@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -eux
+
+# Choose a Python to install conan
+export PYBIN=/opt/python/cp310-cp310/bin
+
+${PYBIN}/pip install conan
+
+export CONAN_CMD=${PYBIN}/conan
+
+cd /tket-conan-index
+
+${CONAN_CMD} profile detect
+DEFAULT_PROFILE_PATH=`${CONAN_CMD} profile path default`
+PROFILE_PATH=./profiles/${CONAN_PROFILE}
+diff ${DEFAULT_PROFILE_PATH} ${PROFILE_PATH} || true
+cp ${PROFILE_PATH} ${DEFAULT_PROFILE_PATH}
+${CONAN_CMD} remote add tket-libs https://quantinuumsw.jfrog.io/artifactory/api/conan/tket1-libs --index 0
+
+for recipe in "$@"
+do
+    echo "Installing ${recipe} ..."
+    ${CONAN_CMD} install recipes/${recipe} --user=tket --channel=stable --build=missing
+    echo "Uploading ${recipe} ..."
+    ${CONAN_CMD} upload ${recipe}@tket/stable
+done
+
+echo "Done."

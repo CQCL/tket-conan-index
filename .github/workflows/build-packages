@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eux
+
+for recipe in "$@"
+do
+    echo "Installing ${recipe} ..."
+    conan install recipes/${recipe} --user=tket --channel=stable --build=missing
+done
+
+echo "Done."

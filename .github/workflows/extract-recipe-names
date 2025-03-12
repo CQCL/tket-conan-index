@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+import os
+import sys
+
+# Given a list of file paths "recipes/A/... recipes/B/...", print the distinct names
+# "A B ...".
+
+if __name__ == "__main__":
+    names = set()
+    for path in sys.argv[1:]:
+        split_path = path.split(os.sep)
+        assert split_path[0] == "recipes"
+        names.add(split_path[1])
+    print(" ".join(sorted(names)))
