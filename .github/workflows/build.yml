@@ -60,7 +60,6 @@ jobs:
         changed_recipes=$(./.github/workflows/extract-recipe-names ${{ needs.changed_recipes.outputs.changed_recipe_files }})
         echo ${changed_recipes}
         echo "changed_recipes=${changed_recipes}" >> $GITHUB_ENV
-        echo $GITHUB_ENV
     - name: Check packages build
       if: github.event_name == 'pull_request'
       shell: bash
@@ -84,7 +83,6 @@ jobs:
         changed_recipes=$(./.github/workflows/extract-recipe-names ${{ needs.changed_recipes.outputs.changed_recipe_files }})
         echo ${changed_recipes}
         echo "changed_recipes=${changed_recipes}" >> $GITHUB_ENV
-        echo $GITHUB_ENV
     - name: Check packages build
       if: github.event_name == 'pull_request'
       run: |
@@ -110,7 +108,6 @@ jobs:
         changed_recipes=$(./.github/workflows/extract-recipe-names ${{ needs.changed_recipes.outputs.changed_recipe_files }})
         echo ${changed_recipes}
         echo "changed_recipes=${changed_recipes}" >> $GITHUB_ENV
-        echo $GITHUB_ENV
     - name: Check packages build
       if: github.event_name == 'pull_request'
       run: |
