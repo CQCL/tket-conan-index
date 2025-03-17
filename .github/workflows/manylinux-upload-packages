@@ -21,7 +21,7 @@ ${CONAN_CMD} remote add tket-libs https://quantinuumsw.jfrog.io/artifactory/api/
 for recipe in "$@"
 do
     echo "Installing ${recipe} ..."
-    ${CONAN_CMD} create recipes/${recipe} --user=tket --channel=stable
+    ${CONAN_CMD} create recipes/${recipe} --user=tket --channel=stable --build=missing
     echo "Uploading ${recipe} ..."
     ${CONAN_CMD} upload ${recipe}@tket/stable
 done

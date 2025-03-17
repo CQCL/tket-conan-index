@@ -5,7 +5,7 @@ set -eux
 for recipe in "$@"
 do
     echo "Installing ${recipe} ..."
-    conan create recipes/${recipe} --user=tket --channel=stable
+    conan create recipes/${recipe} --user=tket --channel=stable --build=missing
 done
 
 echo "Done."
