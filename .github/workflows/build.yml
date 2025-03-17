@@ -59,7 +59,7 @@ jobs:
       run: |
         changed_recipes=$(./.github/workflows/extract-recipe-names ${{ needs.changed_recipes.outputs.changed_recipe_files }})
         echo ${changed_recipes}
-        echo "changed_recipes=${changed_recipes}" >> $GITHUB_OUTPUT
+        echo "changed_recipes=${changed_recipes}" >> $GITHUB_ENV
     - name: Check packages build
       if: github.event_name == 'pull_request'
       shell: bash
@@ -82,7 +82,7 @@ jobs:
       run: |
         changed_recipes=$(./.github/workflows/extract-recipe-names ${{ needs.changed_recipes.outputs.changed_recipe_files }})
         echo ${changed_recipes}
-        echo "changed_recipes=${changed_recipes}" >> $GITHUB_OUTPUT
+        echo "changed_recipes=${changed_recipes}" >> $GITHUB_ENV
     - name: Check packages build
       if: github.event_name == 'pull_request'
       run: |
@@ -107,14 +107,14 @@ jobs:
       run: |
         changed_recipes=$(./.github/workflows/extract-recipe-names ${{ needs.changed_recipes.outputs.changed_recipe_files }})
         echo ${changed_recipes}
-        echo "changed_recipes=${changed_recipes}" >> $GITHUB_OUTPUT
+        echo "changed_recipes=${changed_recipes}" >> $GITHUB_ENV
     - name: Check packages build
       if: github.event_name == 'pull_request'
       run: |
         docker start linux_build
-        docker exec -e JFROG_ARTIFACTORY_TOKEN="${{ secrets.JFROG_ARTIFACTORY_TOKEN }}" -e JFROG_ARTIFACTORY_USER="${{ secrets.JFROG_ARTIFACTORY_USER }}" -e CONAN_PROFILE=linux-x86_64-gcc14 linux_build /bin/bash -c "/tket-conan-index/.github/workflows/manylinux-build-packages ${changed_recipes}"
+        docker exec -e JFROG_ARTIFACTORY_TOKEN="${{ secrets.JFROG_ARTIFACTORY_TOKEN }}" -e JFROG_ARTIFACTORY_USER="${{ secrets.JFROG_ARTIFACTORY_USER }}" -e CONAN_PROFILE=linux-armv8-gcc14 linux_build /bin/bash -c "/tket-conan-index/.github/workflows/manylinux-build-packages ${changed_recipes}"
     - name: Upload packages
       if: github.event_name == 'push'
       run: |
         docker start linux_build
-        docker exec -e JFROG_ARTIFACTORY_TOKEN="${{ secrets.JFROG_ARTIFACTORY_TOKEN }}" -e JFROG_ARTIFACTORY_USER="${{ secrets.JFROG_ARTIFACTORY_USER }}" -e CONAN_PROFILE=linux-x86_64-gcc14 linux_build /bin/bash -c "/tket-conan-index/.github/workflows/manylinux-upload-packages ${changed_recipes}"
+        docker exec -e JFROG_ARTIFACTORY_TOKEN="${{ secrets.JFROG_ARTIFACTORY_TOKEN }}" -e JFROG_ARTIFACTORY_USER="${{ secrets.JFROG_ARTIFACTORY_USER }}" -e CONAN_PROFILE=linux-armv8-gcc14 linux_build /bin/bash -c "/tket-conan-index/.github/workflows/manylinux-upload-packages ${changed_recipes}"

@@ -3,6 +3,8 @@ from conan.tools.files import copy, get
 from conan.tools.layout import basic_layout
 import os
 
+required_conan_version = ">=2.1"
+
 
 class Pybind11JsonConan(ConanFile):
     name = "pybind11_json"
