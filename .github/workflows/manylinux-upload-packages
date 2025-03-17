@@ -23,7 +23,7 @@ do
     echo "Installing ${recipe} ..."
     ${CONAN_CMD} create recipes/${recipe} --user=tket --channel=stable --build=missing
     echo "Uploading ${recipe} ..."
-    ${CONAN_CMD} upload ${recipe}@tket/stable
+    ${CONAN_CMD} upload ${recipe}@tket/stable -r=tket-libs
 done
 
 echo "Done."

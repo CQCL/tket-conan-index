@@ -7,7 +7,7 @@ do
     echo "Installing ${recipe} ..."
     conan create recipes/${recipe} --user=tket --channel=stable --build=missing
     echo "Uploading ${recipe} ..."
-    conan upload ${recipe}@tket/stable
+    conan upload ${recipe}@tket/stable -r=tket-libs
 done
 
 echo "Done."
