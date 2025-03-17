@@ -9,7 +9,7 @@ import sys
 if __name__ == "__main__":
     names = set()
     for path in sys.argv[1:]:
-        split_path = path.split(os.sep)
+        split_path = path.split("/")
         assert split_path[0] == "recipes"
         names.add(split_path[1])
     print(" ".join(sorted(names)))
