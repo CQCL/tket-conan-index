@@ -36,12 +36,12 @@ class Pybind11JsonConan(ConanFile):
 
     def requirements(self):
         self.requires("nlohmann_json/3.11.3")
-        self.requires("pybind11/tci-2.13.6")
+        self.requires("pybind11/tci-2.13.6@tket/stable")
 
     def source(self):
         get(
             self,
-            f"https://github.com/pybind/pybind11_json/archive/{self.version}.tar.gz",
+            f"https://github.com/pybind/pybind11_json/archive/0.2.15.tar.gz",
             destination=self.source_folder,
             strip_root=True,
         )
