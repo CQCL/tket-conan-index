@@ -20,10 +20,11 @@ ${CONAN_CMD} remote add tket-libs https://quantinuumsw.jfrog.io/artifactory/api/
 
 for recipe in "$@"
 do
-    echo "Installing ${recipe} ..."
+    recipe_ver=$(conan inspect recipes/pybind11 | grep "^version: " | awk '{print $2}')
+    echo "Installing ${recipe} ${recipe_ver} ..."
     ${CONAN_CMD} create recipes/${recipe} --user=tket --channel=stable --build=missing
-    echo "Uploading ${recipe} ..."
-    ${CONAN_CMD} upload ${recipe}@tket/stable -r=tket-libs
+    echo "Uploading ${recipe} ${recipe_ver} ..."
+    ${CONAN_CMD} upload ${recipe}/${recipe_ver}@tket/stable -r=tket-libs
 done
 
 echo "Done."
