@@ -12,7 +12,7 @@ required_conan_version = ">=2.1"
 
 class Pybind11JsonConan(ConanFile):
     name = "pybind11_json"
-    version = "0.2.15"
+    version = "tci-0.2.15"
     homepage = "https://github.com/pybind/pybind11_json"
     description = "An nlohmann_json to pybind11 bridge"
     topics = (
@@ -36,7 +36,7 @@ class Pybind11JsonConan(ConanFile):
 
     def requirements(self):
         self.requires("nlohmann_json/3.11.3")
-        self.requires("pybind11/2.13.6")
+        self.requires("pybind11/tci-2.13.6")
 
     def source(self):
         get(
