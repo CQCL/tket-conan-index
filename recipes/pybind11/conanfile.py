@@ -13,7 +13,7 @@ required_conan_version = ">=2.1"
 
 class PyBind11Conan(ConanFile):
     name = "pybind11"
-    version = "2.13.6"
+    version = "tci-2.13.6"
     description = "Seamless operability between C++11 and Python"
     topics = "pybind11", "python", "binding"
     homepage = "https://github.com/pybind/pybind11"
@@ -27,7 +27,7 @@ class PyBind11Conan(ConanFile):
     def source(self):
         get(
             self,
-            f"https://github.com/pybind/pybind11/archive/refs/tags/v{self.version}.tar.gz",
+            f"https://github.com/pybind/pybind11/archive/refs/tags/v2.13.6.tar.gz",
             destination=self.source_folder,
             strip_root=True,
         )
