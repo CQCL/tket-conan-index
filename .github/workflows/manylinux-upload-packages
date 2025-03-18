@@ -20,7 +20,7 @@ ${CONAN_CMD} remote add tket-libs https://quantinuumsw.jfrog.io/artifactory/api/
 
 for recipe in "$@"
 do
-    recipe_ver=$(conan inspect recipes/${recipe} | grep "^version: " | awk '{print $2}')
+    recipe_ver=$(${CONAN_CMD} inspect recipes/${recipe} | grep "^version: " | awk '{print $2}')
     echo "Installing ${recipe} ${recipe_ver} ..."
     ${CONAN_CMD} create recipes/${recipe} --user=tket --channel=stable --build=missing
     echo "Uploading ${recipe} ${recipe_ver} ..."
