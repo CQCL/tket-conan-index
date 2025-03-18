@@ -1,7 +1,3 @@
-"""
-Recipe for pybind11 package.
-"""
-
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeToolchain
 from conan.tools.layout import basic_layout

@@ -1,7 +1,3 @@
-"""
-Recipe for pybind11_json package.
-"""
-
 from conan import ConanFile
 from conan.tools.files import copy, get
 from conan.tools.layout import basic_layout
