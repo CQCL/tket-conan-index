@@ -4,7 +4,7 @@ set -eux
 
 for recipe in "$@"
 do
-    recipe_ver=$(conan inspect recipes/pybind11 | grep "^version: " | awk '{print $2}')
+    recipe_ver=$(conan inspect recipes/${recipe} | grep "^version: " | awk '{print $2}')
     echo "Installing ${recipe} ${recipe_ver} ..."
     conan create recipes/${recipe} --user=tket --channel=stable --build=missing
     echo "Uploading ${recipe} ${recipe_ver} ..."
