@@ -17,7 +17,7 @@ required_conan_version = ">=2.1"
 
 class RapidcheckConan(ConanFile):
     name = "rapidcheck"
-    version = "tci.20230815"
+    version = "tci-20230815"
     description = "QuickCheck clone for C++ with the goal of being simple to use with as little boilerplate as possible"
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://github.com/emil-e/rapidcheck"
