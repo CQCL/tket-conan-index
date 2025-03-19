@@ -48,7 +48,7 @@ class Catch2Conan(ConanFile):
 
     @property
     def _min_console_width(self):
-        # Catch2 doesn't build if less than this value
+        # catch2 doesn't build if less than this value
         return 46
 
     @property
