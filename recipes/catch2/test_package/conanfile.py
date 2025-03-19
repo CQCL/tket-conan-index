@@ -17,7 +17,9 @@ class TestPackageConan(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.variables["WITH_PREFIX"] = self.dependencies[self.tested_reference_str].options.with_prefix
+        tc.variables["WITH_PREFIX"] = self.dependencies[
+            self.tested_reference_str
+        ].options.with_prefix
         tc.generate()
 
     def build(self):
@@ -27,5 +29,9 @@ class TestPackageConan(ConanFile):
 
     def test(self):
         if can_run(self):
-            self.run(os.path.join(self.cpp.build.bindirs[0], "standalone"), env="conanrun")
-            self.run(os.path.join(self.cpp.build.bindirs[0], "benchmark"), env="conanrun")
+            self.run(
+                os.path.join(self.cpp.build.bindirs[0], "standalone"), env="conanrun"
+            )
+            self.run(
+                os.path.join(self.cpp.build.bindirs[0], "benchmark"), env="conanrun"
+            )

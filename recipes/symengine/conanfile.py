@@ -37,11 +37,7 @@ class SymengineConan(ConanFile):
         "fPIC": [True, False],
         "integer_class": ["boostmp", "gmp"],
     }
-    default_options = {
-        "shared": False,
-        "fPIC": True,
-        "integer_class": "gmp",
-    }
+    default_options = {"shared": False, "fPIC": True, "integer_class": "gmp"}
     short_paths = True
 
     def layout(self):
