@@ -4,8 +4,11 @@ set -eux
 
 for recipe in "$@"
 do
-    echo "Installing ${recipe} ..."
-    conan create recipes/${recipe} --user=tket --channel=stable --build=missing
+    for build_type in Release Debug
+    do
+        echo "Installing ${recipe} (${build_type}) ..."
+        conan create recipes/${recipe} --user=tket --channel=stable --build=missing --settings build_type=${build_type}
+    done
 done
 
 echo "Done."

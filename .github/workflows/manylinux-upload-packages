@@ -22,8 +22,11 @@ ${CONAN_CMD} remote login -p ${JFROG_ARTIFACTORY_TOKEN} tket-libs ${JFROG_ARTIFA
 for recipe in "$@"
 do
     recipe_ver=$(${CONAN_CMD} inspect recipes/${recipe} | grep "^version: " | awk '{print $2}')
-    echo "Installing ${recipe} ${recipe_ver} ..."
-    ${CONAN_CMD} create recipes/${recipe} --user=tket --channel=stable --build=missing
+    for build_type in Release Debug
+    do
+        echo "Installing ${recipe} ${recipe_ver} (${build_type}) ..."
+        ${CONAN_CMD} create recipes/${recipe} --user=tket --channel=stable --build=missing --settings build_type=${build_type}
+    done
     echo "Uploading ${recipe} ${recipe_ver} ..."
     ${CONAN_CMD} upload ${recipe}/${recipe_ver}@tket/stable -r=tket-libs
 done
