@@ -1,3 +1,9 @@
 build/
 build-release/
 CMakeUserPresets.json
+conanbuild.sh
+conanbuildenv-*.sh
+conanrun.sh
+conanrunenv-*.sh
+deactivate_conanbuild.sh
+deactivate_conanrun.sh
