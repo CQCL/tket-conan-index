@@ -124,6 +124,13 @@ class SymengineConan(ConanFile):
             "set(LIBS ${LIBS} ${GMP_TARGETS})",
             "set(LIBS ${LIBS} gmp::gmp)",
         )
+        # Require cmake >= 3.5, for cmake 4.0 compatibility
+        replace_in_file(
+            self,
+            os.path.join(self.source_folder, "cmake", "SymEngineConfig.cmake.in"),
+            "cmake_minimum_required(VERSION 2.8.12)",
+            "cmake_minimum_required(VERSION 3.5)",
+        )
 
     def build(self):
         self._patch_sources()
