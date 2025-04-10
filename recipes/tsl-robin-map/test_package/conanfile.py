@@ -9,6 +9,12 @@ class TestPackageConan(ConanFile):
     generators = "CMakeToolchain", "CMakeDeps", "VirtualRunEnv"
     test_type = "explicit"
 
+    def config_options(self):
+        # The package requires at least C++17, but the windows-2025 profile used in
+        # github actions currently specifies 14, so change it here.
+        if self.settings.compiler.cppstd == "14":
+            self.settings.compiler.cppstd = "17"
+
     def layout(self):
         cmake_layout(self)
 
