@@ -9,6 +9,10 @@ class TestPackageConan(ConanFile):
     generators = "CMakeToolchain", "CMakeDeps", "VirtualRunEnv"
     test_type = "explicit"
 
+    def config_options(self):
+        if self.settings.compiler.cppstd == "14":
+            self.settings.compiler.cppstd = "17"
+
     def layout(self):
         cmake_layout(self)
 
