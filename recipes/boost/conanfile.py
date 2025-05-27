@@ -1130,7 +1130,7 @@ class BoostConan(ConanFile):
     def source(self):
         get(
             self,
-            f"https://archives.boost.io/release/1.87.0/source/boost_1_87_0.tar.bz2",
+            f"https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.bz2",
             destination=self.source_folder,
             strip_root=True,
         )
