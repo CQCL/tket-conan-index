@@ -89,7 +89,7 @@ CONFIGURE_OPTIONS = (
 
 class BoostConan(ConanFile):
     name = "boost"
-    version = "tci-1.87.0"
+    version = "tci-1.88.0"
     description = "Boost provides free peer-reviewed portable C++ source libraries"
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://www.boost.org"
@@ -2513,9 +2513,13 @@ class BoostConan(ConanFile):
                         and self.settings.os != "Windows"
                     ):
                         continue
-                    if name in ("boost_math_c99l", "boost_math_tr1l") and str(
-                        self.settings.arch
-                    ).startswith("ppc"):
+                    if name in ("boost_math_c99l", "boost_math_tr1l") and (
+                        str(self.settings.arch).startswith("ppc")
+                        or (
+                            Version(self.version) >= "1.87.0"
+                            and self.settings.os == "Emscripten"
+                        )
+                    ):
                         continue
                     if (
                         name

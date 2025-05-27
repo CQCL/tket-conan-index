@@ -296,4 +296,4 @@ requirements:
 static_only:
 - boost_exception
 - boost_test_exec_monitor
-version: 1.87.0
+version: 1.88.0
