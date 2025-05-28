@@ -35,9 +35,8 @@ class SymengineConan(ConanFile):
     options = {
         "shared": [True, False],
         "fPIC": [True, False],
-        "integer_class": ["boostmp", "gmp"],
     }
-    default_options = {"shared": False, "fPIC": True, "integer_class": "gmp"}
+    default_options = {"shared": False, "fPIC": True}
     short_paths = True
 
     def layout(self):
@@ -61,18 +60,9 @@ class SymengineConan(ConanFile):
         ):
             raise ConanInvalidConfiguration(f"{self.ref} requires GCC >= 7")
 
-    @property
-    def _needs_fast_float(self):
-        return Version(self.version) >= "0.13.0"
-
     def requirements(self):
-        if self.options.integer_class == "boostmp":
-            # symengine/mp_class.h:12
-            self.requires("boost/1.87.0", transitive_headers=True)
-        else:
-            self.requires("gmp/6.3.0", transitive_headers=True, transitive_libs=True)
-        if self._needs_fast_float:
-            self.requires("fast_float/7.0.0")
+        self.requires("gmp/6.3.0", transitive_headers=True, transitive_libs=True)
+        self.requires("fast_float/8.0.2")
 
     def source(self):
         get(
@@ -86,20 +76,17 @@ class SymengineConan(ConanFile):
         tc = CMakeToolchain(self)
         tc.variables["BUILD_TESTS"] = False
         tc.variables["BUILD_BENCHMARKS"] = False
-        tc.variables["INTEGER_CLASS"] = self.options.integer_class
+        tc.variables["INTEGER_CLASS"] = "gmp"
         tc.variables["MSVC_USE_MT"] = is_msvc_static_runtime(self)
-        if self._needs_fast_float:
-            tc.variables["WITH_SYSTEM_FASTFLOAT"] = True
+        tc.variables["WITH_SYSTEM_FASTFLOAT"] = True
 
         tc.generate()
         deps = CMakeDeps(self)
-        if self.options.integer_class == "gmp":
-            deps.set_property("gmp", "cmake_file_name", "GMP")
-            # If we ever add support for gmpxx, we should set this property
-            # if self.dependencies["gmp"].options.enable_cxx:
-            #     deps.set_property("gmp::gmpxx", "cmake_target_name", "gmpxx")
-        if self._needs_fast_float:
-            deps.set_property("fast_float", "cmake_file_name", "FASTFLOAT")
+        deps.set_property("gmp", "cmake_file_name", "GMP")
+        # If we ever add support for gmpxx, we should set this property
+        # if self.dependencies["gmp"].options.enable_cxx:
+        #     deps.set_property("gmp::gmpxx", "cmake_target_name", "gmpxx")
+        deps.set_property("fast_float", "cmake_file_name", "FASTFLOAT")
         deps.generate()
 
     def _patch_sources(self):
