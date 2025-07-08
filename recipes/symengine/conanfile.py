@@ -24,7 +24,7 @@ required_conan_version = ">=2.1"
 
 class SymengineConan(ConanFile):
     name = "symengine"
-    version = "tci-0.14.0"
+    version = "tci-0.14.0.1"
     description = "A fast symbolic manipulation library, written in C++"
     license = "MIT"
     topics = ("symbolic", "algebra")
@@ -79,6 +79,7 @@ class SymengineConan(ConanFile):
         tc.variables["INTEGER_CLASS"] = "gmp"
         tc.variables["MSVC_USE_MT"] = is_msvc_static_runtime(self)
         tc.variables["WITH_SYSTEM_FASTFLOAT"] = True
+        tc.variables["WITH_SYMENGINE_THREAD_SAFE"] = True
 
         tc.generate()
         deps = CMakeDeps(self)
