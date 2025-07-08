@@ -79,6 +79,7 @@ class SymengineConan(ConanFile):
         tc.variables["INTEGER_CLASS"] = "gmp"
         tc.variables["MSVC_USE_MT"] = is_msvc_static_runtime(self)
         tc.variables["WITH_SYSTEM_FASTFLOAT"] = True
+        tc.variables["WITH_SYMENGINE_THREAD_SAFE"] = True
 
         tc.generate()
         deps = CMakeDeps(self)
