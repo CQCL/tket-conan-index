@@ -24,7 +24,7 @@ required_conan_version = ">=2.1"
 
 class SymengineConan(ConanFile):
     name = "symengine"
-    version = "tci-0.14.0"
+    version = "tci-0.14.0.1"
     description = "A fast symbolic manipulation library, written in C++"
     license = "MIT"
     topics = ("symbolic", "algebra")
