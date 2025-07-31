@@ -16,7 +16,7 @@ required_conan_version = ">=2.1"
 
 class Catch2Conan(ConanFile):
     name = "catch2"
-    version = "3.8.1"
+    version = "3.9.0"
     description = (
         "A modern, C++-native, header-only, framework for unit-tests, TDD and BDD"
     )
