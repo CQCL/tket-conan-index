@@ -100,7 +100,7 @@ jobs:
   build_manylinux_aarch64:
     name: Build on manylinux (aarch64)
     needs: changed_recipes
-    runs-on: 'buildjet-8vcpu-ubuntu-2204-arm'
+    runs-on: 'ubuntu-24.04-arm'
     steps:
     - uses: actions/checkout@v4
     - name: Set up container
