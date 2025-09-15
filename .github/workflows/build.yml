@@ -7,118 +7,23 @@ on:
   push:
     branches:
       - main
+      - ae/test-macos-26
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-jobs:
-  changed_recipes:
-    name: Check changed recipes
-    runs-on: ubuntu-latest
-    outputs:
-      changed_recipe_files: ${{ steps.filter.outputs.changed_files }}
-    steps:
-    - uses: actions/checkout@v4
-    - uses: dorny/paths-filter@v3.0.2
-      id: filter
-      with:
-        base: ${{ github.ref }}
-        list-files: shell
-        filters: |
-          changed:
-            - 'recipes/**'
   build:
     name: Build
-    needs: changed_recipes
     strategy:
       matrix:
-        os: ['ubuntu-24.04', 'macos-14', 'macos-15', 'windows-2025']
+        os: ['macos-26']
     runs-on: ${{ matrix.os }}
     steps:
-    - name: Set git to use LF
-      run: |
-        git config --global core.autocrlf false
-        git config --global core.eol lf
-    - uses: actions/checkout@v4
-    - name: Select Python 3.12
-      uses: actions/setup-python@v6
-      with:
-        python-version: '3.12'
     - name: Install conan
       uses: turtlebrowser/get-conan@v1.2
     - name: Set up conan
       shell: bash
       run: |
         conan profile detect
-        DEFAULT_PROFILE_PATH=`conan profile path default`
-        PROFILE_PATH=./profiles/${{ matrix.os }}
-        diff ${DEFAULT_PROFILE_PATH} ${PROFILE_PATH} || true
-        cp ${PROFILE_PATH} ${DEFAULT_PROFILE_PATH}
-        conan remote add tket-libs https://quantinuumsw.jfrog.io/artifactory/api/conan/tket1-libs --index 0
-    - name: Authenticate to repository
-      run: conan remote login -p ${{ secrets.JFROG_ARTIFACTORY_TOKEN }} tket-libs ${{ secrets.JFROG_ARTIFACTORY_USER }}
-    - name: Extract names of changed recipes
-      shell: bash
-      run: |
-        changed_recipes=$(./.github/workflows/extract-recipe-names ${{ needs.changed_recipes.outputs.changed_recipe_files }})
-        echo ${changed_recipes}
-        echo "changed_recipes=${changed_recipes}" >> $GITHUB_ENV
-    - name: Check packages build
-      if: github.event_name == 'pull_request'
-      shell: bash
-      run: ./.github/workflows/build-packages ${changed_recipes}
-    - name: Upload packages
-      if: github.event_name == 'push'
-      shell: bash
-      run: ./.github/workflows/upload-packages ${changed_recipes}
-  build_manylinux_x86_64:
-    name: Build on manylinux (x86_64)
-    needs: changed_recipes
-    runs-on: 'ubuntu-latest'
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up container
-      run: |
-        docker create --name linux_build -i -v /:/host quay.io/pypa/manylinux_2_28_x86_64:latest /bin/bash
-        docker cp . linux_build:/tket-conan-index/
-    - name: Extract names of changed recipes
-      run: |
-        changed_recipes=$(./.github/workflows/extract-recipe-names ${{ needs.changed_recipes.outputs.changed_recipe_files }})
-        echo ${changed_recipes}
-        echo "changed_recipes=${changed_recipes}" >> $GITHUB_ENV
-    - name: Check packages build
-      if: github.event_name == 'pull_request'
-      run: |
-        docker start linux_build
-        docker exec -e JFROG_ARTIFACTORY_TOKEN="${{ secrets.JFROG_ARTIFACTORY_TOKEN }}" -e JFROG_ARTIFACTORY_USER="${{ secrets.JFROG_ARTIFACTORY_USER }}" -e CONAN_PROFILE=linux-x86_64-gcc14 linux_build /bin/bash -c "/tket-conan-index/.github/workflows/manylinux-build-packages ${changed_recipes}"
-    - name: Upload packages
-      if: github.event_name == 'push'
-      run: |
-        docker start linux_build
-        docker exec -e JFROG_ARTIFACTORY_TOKEN="${{ secrets.JFROG_ARTIFACTORY_TOKEN }}" -e JFROG_ARTIFACTORY_USER="${{ secrets.JFROG_ARTIFACTORY_USER }}" -e CONAN_PROFILE=linux-x86_64-gcc14 linux_build /bin/bash -c "/tket-conan-index/.github/workflows/manylinux-upload-packages ${changed_recipes}"
-  build_manylinux_aarch64:
-    name: Build on manylinux (aarch64)
-    needs: changed_recipes
-    runs-on: 'ubuntu-24.04-arm'
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up container
-      run: |
-        docker create --name linux_build -i -v /:/host quay.io/pypa/manylinux_2_28_aarch64:latest /bin/bash
-        docker cp . linux_build:/tket-conan-index/
-    - name: Extract names of changed recipes
-      run: |
-        changed_recipes=$(./.github/workflows/extract-recipe-names ${{ needs.changed_recipes.outputs.changed_recipe_files }})
-        echo ${changed_recipes}
-        echo "changed_recipes=${changed_recipes}" >> $GITHUB_ENV
-    - name: Check packages build
-      if: github.event_name == 'pull_request'
-      run: |
-        docker start linux_build
-        docker exec -e CONAN_PROFILE=linux-armv8-gcc14 linux_build /bin/bash -c "/tket-conan-index/.github/workflows/manylinux-build-packages ${changed_recipes}"
-    - name: Upload packages
-      if: github.event_name == 'push'
-      run: |
-        docker start linux_build
-        docker exec -e JFROG_ARTIFACTORY_TOKEN="${{ secrets.JFROG_ARTIFACTORY_TOKEN }}" -e JFROG_ARTIFACTORY_USER="${{ secrets.JFROG_ARTIFACTORY_USER }}" -e CONAN_PROFILE=linux-armv8-gcc14 linux_build /bin/bash -c "/tket-conan-index/.github/workflows/manylinux-upload-packages ${changed_recipes}"
+        cat `conan profile path default`
