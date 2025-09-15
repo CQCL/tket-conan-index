@@ -5,7 +5,7 @@ from conan.tools.build import check_min_cppstd
 from conan.tools.cmake import CMake, CMakeToolchain, cmake_layout
 from conan.tools.files import get, copy, rename
 
-required_conan_version = ">=2.2"
+required_conan_version = ">=2.3"
 
 
 class NanobindConan(ConanFile):
