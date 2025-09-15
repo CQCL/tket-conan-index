@@ -23,6 +23,8 @@ jobs:
     steps:
     - name: Select Python 3.12
       uses: actions/setup-python@v6
+      with:
+        python-version: '3.12'
     - name: Install conan
       uses: turtlebrowser/get-conan@v1.2
     - name: Set up conan
