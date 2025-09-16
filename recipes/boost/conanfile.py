@@ -44,7 +44,7 @@ import shutil
 import sys
 import yaml
 
-required_conan_version = ">=2.1"
+required_conan_version = ">=2.3"
 
 # When adding (or removing) an option, also add this option to the list in
 # `rebuild-dependencies.yml` and re-run that script.

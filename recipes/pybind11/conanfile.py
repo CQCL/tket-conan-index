@@ -8,7 +8,7 @@ from conan.tools.layout import basic_layout
 from conan.tools.files import get, copy, replace_in_file, rm, rmdir
 import os
 
-required_conan_version = ">=2.1"
+required_conan_version = ">=2.3"
 
 
 class PyBind11Conan(ConanFile):
