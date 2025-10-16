@@ -62,7 +62,7 @@ class SymengineConan(ConanFile):
 
     def requirements(self):
         self.requires("gmp/tci-6.3.0@tket/stable", transitive_headers=True, transitive_libs=True)
-        self.requires("fast_float/8.0.2")
+        self.requires("fast_float/8.1.0")
 
     def source(self):
         get(
