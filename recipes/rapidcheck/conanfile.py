@@ -12,7 +12,7 @@ from conan.tools.scm import Version
 from os.path import join
 import textwrap
 
-required_conan_version = ">=2.3"
+required_conan_version = ">=2.4"
 
 
 class RapidcheckConan(ConanFile):

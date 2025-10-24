@@ -11,7 +11,7 @@ from conan.tools.scm import Version
 import os
 import textwrap
 
-required_conan_version = ">=2.3"
+required_conan_version = ">=2.4"
 
 
 class Catch2Conan(ConanFile):
