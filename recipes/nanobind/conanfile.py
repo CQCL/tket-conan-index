@@ -28,9 +28,6 @@ class NanobindConan(ConanFile):
     def requirements(self):
         self.requires("tsl-robin-map/tci-1.4.0@tket/stable")
 
-    def validate(self):
-        check_min_cppstd(self, 17)
-
     def source(self):
         get(
             self,
