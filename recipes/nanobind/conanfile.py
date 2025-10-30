@@ -51,13 +51,18 @@ class NanobindConan(ConanFile):
         return os.path.join("lib", "cmake")
 
     def package(self):
-        copy(self, "LICENSE", self.source_folder, os.path.join(self.package_folder, "licenses"))
+        copy(
+            self,
+            "LICENSE",
+            self.source_folder,
+            os.path.join(self.package_folder, "licenses"),
+        )
         cmake = CMake(self)
         cmake.install()
 
     def package_info(self):
         # Don't generate any CMake files and include the upstream ones
-        # Only CMake is officially supported by nanobind: 
+        # Only CMake is officially supported by nanobind:
         # https://nanobind.readthedocs.io/en/latest/building.html#building
         self.cpp_info.set_property("cmake_find_mode", "none")
         self.cpp_info.builddirs.append(os.path.join("nanobind", "cmake"))
