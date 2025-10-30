@@ -16,7 +16,6 @@ class NanobindConan(ConanFile):
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://github.com/wjakob/nanobind"
     topics = ("python", "bindings", "nanobind", "header-only")
-
     package_type = "header-library"
     settings = "os", "arch", "compiler", "build_type"
 
@@ -60,23 +59,11 @@ class NanobindConan(ConanFile):
         )
         cmake = CMake(self)
         cmake.install()
-        rename(
-            self,
-            os.path.join(self.package_folder, "nanobind"),
-            os.path.join(self.package_folder, "lib"),
-        )
-        rename(
-            self,
-            os.path.join(
-                self.package_folder, self._cmake_rel_dir, "nanobind-config.cmake"
-            ),
-            os.path.join(self.package_folder, self._cmake_rel_dir, "nanobind.cmake"),
-        )
 
     def package_info(self):
-        self.cpp_info.set_property("cmake_file_name", "nanobind")
-        self.cpp_info.includedirs = [os.path.join("lib", "include")]
-        self.cpp_info.builddirs = [self._cmake_rel_dir]
-        self.cpp_info.set_property(
-            "cmake_build_modules", [os.path.join(self._cmake_rel_dir, "nanobind.cmake")]
-        )
+        # Don't generate any CMake files and include the upstream ones
+        # Only CMake is officially supported by nanobind:
+        # https://nanobind.readthedocs.io/en/latest/building.html#building
+        self.cpp_info.set_property("cmake_find_mode", "none")
+        self.cpp_info.builddirs.append(os.path.join("nanobind", "cmake"))
+        self.cpp_info.includedirs = [os.path.join("nanobind", "include")]
