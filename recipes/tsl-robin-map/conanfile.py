@@ -9,7 +9,7 @@ required_conan_version = ">=2.4"
 
 class TslRobinMapConan(ConanFile):
     name = "tsl-robin-map"
-    version = "tci-1.4.0"
+    version = "tci-1.4.1"
     license = "MIT"
     description = (
         "C++ implementation of a fast hash map and hash set using robin hood hashing."
@@ -34,7 +34,7 @@ class TslRobinMapConan(ConanFile):
     def source(self):
         get(
             self,
-            f"https://github.com/Tessil/robin-map/archive/v1.4.0.tar.gz",
+            f"https://github.com/Tessil/robin-map/archive/v1.4.1.tar.gz",
             strip_root=True,
         )
 
