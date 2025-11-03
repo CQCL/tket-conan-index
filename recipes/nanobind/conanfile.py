@@ -26,7 +26,7 @@ class NanobindConan(ConanFile):
         self.info.clear()
 
     def requirements(self):
-        self.requires("tsl-robin-map/tci-1.4.0@tket/stable")
+        self.requires("tsl-robin-map/tci-1.4.1@tket/stable")
 
     def source(self):
         get(
