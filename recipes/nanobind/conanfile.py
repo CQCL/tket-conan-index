@@ -10,7 +10,7 @@ required_conan_version = ">=2.4"
 
 class NanobindConan(ConanFile):
     name = "nanobind"
-    version = "tci-2.9.2"
+    version = "tci-2.10.1"
     description = "Tiny and efficient C++/Python bindings"
     license = "BSD-3-Clause"
     url = "https://github.com/conan-io/conan-center-index"
