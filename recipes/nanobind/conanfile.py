@@ -31,7 +31,7 @@ class NanobindConan(ConanFile):
     def source(self):
         get(
             self,
-            f"https://github.com/wjakob/nanobind/archive/refs/tags/v2.9.2.tar.gz",
+            f"https://github.com/wjakob/nanobind/archive/refs/tags/v2.10.1.tar.gz",
             strip_root=True,
         )
 
